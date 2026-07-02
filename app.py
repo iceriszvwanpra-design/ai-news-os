@@ -92,20 +92,20 @@ if st.button("🚀 สแกนกระแสไวรัล 50 อันดั
                         "เนื้อหาโดยย่อ": desc,
                         "ลิงก์ต้นทาง": entry.link
                     })
-                except:
-                    pass
+            except:
+                pass
                     
-            sorted_data = sorted(raw_data, key=lambda x: x['Viral Score'], reverse=True)
-            unique_data = []
-            seen_titles = set()
-            
-            for item in sorted_data:
-                if item['พาดหัวข่าว'] not in seen_titles:
-                    unique_data.append(item)
-                    seen_titles.add(item['พาดหัวข่าว'])
-                    
-            st.session_state.master_news_data = unique_data[:50]
-            st.success("✅ ดึงข้อมูลและจัดอันดับสำเร็จ!")
+        sorted_data = sorted(raw_data, key=lambda x: x['Viral Score'], reverse=True)
+        unique_data = []
+        seen_titles = set()
+        
+        for item in sorted_data:
+            if item['พาดหัวข่าว'] not in seen_titles:
+                unique_data.append(item)
+                seen_titles.add(item['พาดหัวข่าว'])
+                
+        st.session_state.master_news_data = unique_data[:50]
+        st.success("✅ ดึงข้อมูลและจัดอันดับสำเร็จ!")
 
 if st.session_state.master_news_data:
     df = pd.DataFrame(st.session_state.master_news_data)
@@ -113,7 +113,6 @@ if st.session_state.master_news_data:
     st.markdown("---")
     st.subheader("📊 ตารางคัดกรอง 50 อันดับความปัง (Top 50 Viral Ranking)")
     
-    # ใช้วิธีแสดงผลแบบตารางมาตรฐาน เพื่อตัดปัญหาเรื่อง matplotlib ขาดหายไปบนคลาวด์
     st.dataframe(
         df[["Viral Score", "แพลตฟอร์ม", "พาดหัวข่าว", "ลิงก์ต้นทาง"]],
         column_config={
